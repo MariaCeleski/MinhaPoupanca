@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Poupança</title>
+</head>
+<html>
+
+<body>
+    <p id="titulo">
+
+    <h1>Minha Poupança</h1>
+
+
+    <p id="saldo" style="background-color: #aaffff;">Saldo R$:</p>
+
+    <p id="acoes">
+
+        <input id="valor" type="number" ><br> <br>
+
+        <input type="button" value="Depósito" onclick="poupanca.depositar();">
+
+        <input type="button" value="Saque" onclick="poupanca.sacar();">
+
+        <input type="button" value="Extrato" onclick="poupanca.exibirExtrato();">
+    </p>
+
+    <p id="extrato" style="background-color: #aaffff;">
+        Extrato
+    </p>
+
+
+</body>
+
+<script>
+    var saidaSaldo = document.getElementById("saldo");
+
+    var saidaExtrato = document.getElementById("extrato");
+
+    var valorHTML = document.getElementById("valor");
+
+
+    function dataCurta() {
+
+
+        var data = new Date();
+
+        var d = data.getDate();
+
+        var m = data.getMonth() + 1;
+
+        var a = data.getFullYear();
+
+        var h = data.getHours();
+
+        var mi = data.getMinutes();
+
+        
+
+
+        if (d.toString.length==1) {
+             d = d; }
+
+        if (m.toString.length==1) {
+             m =  m; }
+
+        if (a.toString.length==1) {
+             a =  a; }
+
+        if (h.toString.length==1) {
+             h = h; }
+
+        if (mi.toString.length==1) {
+             mi =  mi; }     
+        
+
+       
+        return d + "/" + m + "/" + a + " -- " + h + ":" + mi ;
+
+
+    }
+
+
+
+    var poupanca = {
+
+        saldo: 0,
+
+        movimentacao: [],
+
+        depositar: function () {
+
+            var valor = Number(valorHTML.value);
+
+            this.saldo += valor;
+
+            saidaSaldo.innerHTML = "Saldo = R$" + this.saldo.toFixed(2);
+
+            this.movimentacao.push(dataCurta() + " - Depósito de R$ " + valor.toFixed(2));
+
+            valorHTML.value = "";
+
+
+        },
+
+
+        sacar: function () {
+
+
+            var valor = Number(valorHTML.value);
+            
+
+            if (valor > this.saldo) {
+
+                alert("Saldo Insuficente!");
+
+            } else {
+
+                this.saldo -= valor;
+
+                this.movimentacao.push(dataCurta() + " - Saque de R$ " + valor.toFixed(2));
+
+            }
+
+
+            saidaSaldo.innerHTML = "Saldo = R$" + this.saldo;
+
+            valorHTML.value = "";
+
+
+        },
+
+
+        exibirExtrato: function () {
+
+
+            saidaExtrato.innerHTML = "Extrato:<br>";
+
+
+            for (i = 0; i <= this.movimentacao.length - 1; i++) {
+
+                saidaExtrato.innerHTML += this.movimentacao[i] + "<br>";
+                
+
+            }
+
+
+        }
+
+
+    }
+
+
+
+
+</script>
+
+</html>
